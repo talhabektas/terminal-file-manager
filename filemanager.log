@@ -5,3 +5,4 @@
 [Sat Dec 14 13:12:18 2024] Operation: display_file, Path: test.txt, Result: SUCCESS
 [Sat Dec 14 13:12:36 2024] Operation: display_file, Path: test.txt, Result: SUCCESS
 [Tue Dec 24 15:25:48 2024] Operation: display_file, Path: test.txt, Result: SUCCESS
+[Thu Dec 26 10:44:20 2024] Operation: list_directory, Path: ., Result: SUCCESS
