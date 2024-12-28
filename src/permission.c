@@ -1,4 +1,8 @@
-﻿
+﻿/*
+* permissions.c
+* Handles file permission operations using chmod
+* and permission display functionality
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -6,6 +10,8 @@
 #include "permissions.h"
 #include "logger.h"
 
+// Changes file permissions using chmod system call
+// mode should be provided in octal format (e.g., 0644)
 int change_permissions(const char* path, mode_t mode) {
     if (chmod(path, mode) == -1) {
         printf("İzinler değiştirilemedi: %s\n", path);
@@ -16,6 +22,9 @@ int change_permissions(const char* path, mode_t mode) {
     return 0;
 }
 
+
+// Displays file permissions in readable format (e.g., -rwxr-xr-x)
+// Shows directory (d), user, group, and others permissions
 int display_permissions(const char* path) {
     struct stat file_stat;
 

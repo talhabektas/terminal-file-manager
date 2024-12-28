@@ -1,13 +1,32 @@
+/*
+* main.c
+* Main program entry point for the file manager
+* Handles command-line arguments and dispatches operations
+* to appropriate modules
+*
+* Supported commands:
+* - slist: List directory contents
+* - screate: Create new file
+* - smkdir: Create new directory
+* - sremove: Remove file or directory
+* - scopy: Copy file
+* - smove: Move file
+* - sshow: Display file contents
+* - ssearch: Search for files
+* - schmod: Change file permissions
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>     // close() için
+#include <unistd.h>     // for close() operation. 
 #include <fcntl.h> 
 #include "file_operations.h"
 #include "directory_ops.h"
 #include "permissions.h"
 #include "logger.h"
 
+// Prints usage information and available commands
 void print_usage() {
     printf("Kullanım:\n");
     printf("  slist <dizin>                : Dizin içeriğini listele\n");
@@ -21,6 +40,8 @@ void print_usage() {
     printf("  schmod <dosya> <izinler>     : Dosya izinlerini değiştir\n");
 }
 
+// Main program entry point
+// Parses command line arguments and executes requested operation
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         print_usage();

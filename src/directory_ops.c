@@ -1,3 +1,10 @@
+/*
+* directory_ops.c
+* This file contains functions for directory operations like listing,
+* creating, and removing directories.
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +16,7 @@
 #include "directory_ops.h"
 #include "logger.h"
 
+// Lists contents of a directory with file permissions and sizes
 int list_directory(const char* path) {
     DIR *dir;
     struct dirent *entry;
@@ -23,7 +31,7 @@ int list_directory(const char* path) {
     }
 
     while ((entry = readdir(dir)) != NULL) {
-        // . ve .. dizinlerini atla
+        // . and .. pass-> 
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
 
@@ -32,12 +40,12 @@ int list_directory(const char* path) {
         if (stat(full_path, &file_stat) < 0)
             continue;
 
-        // Dosya tipini belirle
+        // Specify the file type
         char type = '-';
         if (S_ISDIR(file_stat.st_mode)) type = 'd';
         if (S_ISLNK(file_stat.st_mode)) type = 'l';
 
-        // İzinleri göster
+        // Shows permissions
         printf("%c%c%c%c%c%c%c%c%c%c %8ld %s\n",
             type,
             (file_stat.st_mode & S_IRUSR) ? 'r' : '-',
@@ -57,7 +65,7 @@ int list_directory(const char* path) {
     log_operation("list_directory", path, 1);
     return 0;
 }
-
+// Creates a new directory with default permissions (0755)
 int create_directory(const char* path) {
     if (mkdir(path, 0755) == -1) {
         printf("Dizin oluşturulamadı: %s\n", path);
@@ -68,6 +76,7 @@ int create_directory(const char* path) {
     return 0;
 }
 
+//Removes an empty directory
 int remove_directory(const char* path) {
     if (!is_directory_empty(path)) {
         printf("Dizin boş değil: %s\n", path);
@@ -83,6 +92,9 @@ int remove_directory(const char* path) {
     return 0;
 }
 
+//Controls empty situation
+// Helper function to check if a directory is empty
+// Returns 1 if empty, 0 if not empty
 int is_directory_empty(const char* path) {
     DIR *dir;
     struct dirent *entry;
@@ -102,3 +114,11 @@ int is_directory_empty(const char* path) {
     closedir(dir);
     return count == 0;
 }
+
+
+
+
+
+
+
+
